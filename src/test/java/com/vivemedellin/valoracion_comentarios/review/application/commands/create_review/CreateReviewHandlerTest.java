@@ -1,31 +1,58 @@
 package com.vivemedellin.valoracion_comentarios.review.application.commands.create_review;
 
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDTO;
+import com.vivemedellin.valoracion_comentarios.review.entity.Review;
 import com.vivemedellin.valoracion_comentarios.review.factory.ReviewMockFactory;
+import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
+import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CreateReviewHandlerTest {
 
-    @Autowired
+    @Mock
+    private ReviewRepository reviewRepository;
+
+    @Mock
+    private ReviewMapper reviewMapper;
+
+    @InjectMocks
     private CreateReviewHandler createReviewHandler;
 
     @Test
-    public void test(){
+    public void test() {
+        // Arrange
+        var reviewMock = ReviewMockFactory.createReview(1L, 5, "Nice event!");
 
-        var review = ReviewMockFactory.createReview(1L, 5, "Nice event!");
+        Review reviewEntity = new Review();
+        reviewEntity.setRating(reviewMock.getRating());
+        reviewEntity.setCommentary(reviewMock.getCommentary());
 
-        CreateReviewCommand command = new CreateReviewCommand(review.getRating(), review.getCommentary());
+        when(reviewRepository.save(any(Review.class))).thenReturn(reviewEntity);
+
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setRating(reviewMock.getRating());
+        reviewDTO.setCommentary(reviewMock.getCommentary());
+
+        when(reviewMapper.toDTO(any(Review.class))).thenReturn(reviewDTO);
+
+        // Act
+        CreateReviewCommand command = new CreateReviewCommand(reviewMock.getRating(), reviewMock.getCommentary());
         ReviewDTO result = createReviewHandler.handle(command);
 
+        // Assert
         assertNotNull(result);
-        assertEquals(review.getRating(), result.getRating());
-        assertEquals(review.getCommentary(), result.getCommentary());
+        assertEquals(reviewMock.getRating(), result.getRating());
+        assertEquals(reviewMock.getCommentary(), result.getCommentary());
 
+        verify(reviewRepository).save(any(Review.class));
+        verify(reviewMapper).toDTO(any(Review.class));
     }
 }

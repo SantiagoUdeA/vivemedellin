@@ -25,6 +25,8 @@ public class CreateReviewHandler {
         Review review = new Review();
         review.setRating(command.getRating());
         review.setComment(command.getComment());
+        review.setEventId(command.getEventId());
+        review.setUserId(command.getUserId());
         var saved = reviewRepository.save(review);
         return reviewMapper.toDTO(saved);
 

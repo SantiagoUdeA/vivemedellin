@@ -29,9 +29,11 @@ public class CreateReviewHandlerTest {
     @Test
     public void test() {
         // Arrange
-        var reviewMock = ReviewMockFactory.createReview(1L, 5, "Nice event!");
+        var reviewMock = ReviewMockFactory.createReview(1L, "user123", 1L, 5, "Nice event!");
 
         Review reviewEntity = new Review();
+        reviewEntity.setEventId(reviewMock.getEventId());
+        reviewEntity.setUserId(reviewMock.getUserId());
         reviewEntity.setRating(reviewMock.getRating());
         reviewEntity.setComment(reviewMock.getComment());
 
@@ -40,17 +42,21 @@ public class CreateReviewHandlerTest {
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRating(reviewMock.getRating());
         reviewDTO.setComment(reviewMock.getComment());
+        reviewDTO.setEventId(reviewMock.getEventId());
+        reviewDTO.setUserId(reviewMock.getUserId());
 
         when(reviewMapper.toDTO(any(Review.class))).thenReturn(reviewDTO);
 
         // Act
-        CreateReviewCommand command = new CreateReviewCommand(reviewMock.getRating(), reviewMock.getComment());
+        CreateReviewCommand command = new CreateReviewCommand(reviewMock.getUserId(), reviewMock.getEventId(), reviewMock.getRating(), reviewMock.getComment());
         ReviewDTO result = createReviewHandler.handle(command);
 
         // Assert
         assertNotNull(result);
         assertEquals(reviewMock.getRating(), result.getRating());
         assertEquals(reviewMock.getComment(), result.getComment());
+        assertEquals(reviewMock.getUserId(), result.getUserId());
+        assertEquals(reviewMock.getEventId(), result.getEventId());
 
         verify(reviewRepository).save(any(Review.class));
         verify(reviewMapper).toDTO(any(Review.class));

@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ReviewDTO {
     private Long id;
+    private String userId;
+    private Long eventId;
     private int rating;
     private String comment;
     private LocalDateTime createdAt;

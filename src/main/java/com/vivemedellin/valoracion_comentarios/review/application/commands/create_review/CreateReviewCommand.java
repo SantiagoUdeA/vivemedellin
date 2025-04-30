@@ -6,7 +6,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CreateReviewCommand {
+    private String userId;
+    private Long eventId;
     private int rating;
     private String comment;
-
 }

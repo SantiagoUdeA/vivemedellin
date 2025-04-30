@@ -27,6 +27,12 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private String userId;
+
+    @Column(nullable = false)
+    private Long eventId;
+
     @Min(1)
     @Max(5)
     @Column(nullable = false)

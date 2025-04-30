@@ -11,7 +11,7 @@ public class ReviewMockFactory {
         Review review = new Review();
         review.setId(id);
         review.setRating(rating);
-        review.setCommentary(commentary);
+        review.setComment(commentary);
         review.setCreatedAt(LocalDateTime.now());
         review.setUpdatedAt(LocalDateTime.now());
         return review;

@@ -33,24 +33,24 @@ public class CreateReviewHandlerTest {
 
         Review reviewEntity = new Review();
         reviewEntity.setRating(reviewMock.getRating());
-        reviewEntity.setCommentary(reviewMock.getCommentary());
+        reviewEntity.setComment(reviewMock.getComment());
 
         when(reviewRepository.save(any(Review.class))).thenReturn(reviewEntity);
 
         ReviewDTO reviewDTO = new ReviewDTO();
         reviewDTO.setRating(reviewMock.getRating());
-        reviewDTO.setCommentary(reviewMock.getCommentary());
+        reviewDTO.setComment(reviewMock.getComment());
 
         when(reviewMapper.toDTO(any(Review.class))).thenReturn(reviewDTO);
 
         // Act
-        CreateReviewCommand command = new CreateReviewCommand(reviewMock.getRating(), reviewMock.getCommentary());
+        CreateReviewCommand command = new CreateReviewCommand(reviewMock.getRating(), reviewMock.getComment());
         ReviewDTO result = createReviewHandler.handle(command);
 
         // Assert
         assertNotNull(result);
         assertEquals(reviewMock.getRating(), result.getRating());
-        assertEquals(reviewMock.getCommentary(), result.getCommentary());
+        assertEquals(reviewMock.getComment(), result.getComment());
 
         verify(reviewRepository).save(any(Review.class));
         verify(reviewMapper).toDTO(any(Review.class));

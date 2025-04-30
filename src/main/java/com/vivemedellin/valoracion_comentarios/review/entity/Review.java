@@ -33,7 +33,7 @@ public class Review {
     private int rating;
 
     @Column()
-    private String commentary;
+    private String comment;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)

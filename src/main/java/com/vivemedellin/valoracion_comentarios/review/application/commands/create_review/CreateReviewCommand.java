@@ -7,6 +7,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class CreateReviewCommand {
     private int rating;
-    private String commentary;
+    private String comment;
 
 }

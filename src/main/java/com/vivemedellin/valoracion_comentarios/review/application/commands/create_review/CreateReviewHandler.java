@@ -24,7 +24,7 @@ public class CreateReviewHandler {
     public ReviewDTO handle(CreateReviewCommand command) {
         Review review = new Review();
         review.setRating(command.getRating());
-        review.setCommentary(command.getCommentary());
+        review.setComment(command.getComment());
         var saved = reviewRepository.save(review);
         return reviewMapper.toDTO(saved);
 

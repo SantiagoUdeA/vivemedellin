@@ -1,0 +1,26 @@
+type Review {
+    id: String!
+    userId: String!
+    eventId: Int!
+    rating: Int!
+    comment: String
+    createdAt: String!
+    updatedAt: String
+}
+
+input ReviewInput {
+    userId: String!
+    eventId: Int!
+    rating: Int!
+    comment: String
+}
+
+type Mutation {
+    createReview(input: ReviewInput!): Review!
+}
+
+type Query {
+    allReviews: [Review!]!
+    reviewById(id: ID!): Review
+}
+

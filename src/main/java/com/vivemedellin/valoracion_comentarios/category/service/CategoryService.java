@@ -1,7 +1,6 @@
 package com.vivemedellin.valoracion_comentarios.category.service;
 
 import com.vivemedellin.valoracion_comentarios.category.dto.CategoryDTO;
-import com.vivemedellin.valoracion_comentarios.category.entity.Category;
 import com.vivemedellin.valoracion_comentarios.category.factory.CategoryMockFactory;
 import com.vivemedellin.valoracion_comentarios.category.mapper.CategoryMapper;
 import org.springframework.beans.factory.annotation.Autowired;

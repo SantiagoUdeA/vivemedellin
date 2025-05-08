@@ -41,8 +41,7 @@ public class ReviewController {
     public String deleteReview(@Argument int reviewId){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = (String) auth.getPrincipal(); // El sub de Supabase
-        System.out.println(userId);
-        var command = new DeleteReviewCommand((long) reviewId, "user123");
+        var command = new DeleteReviewCommand((long) reviewId, userId);
         return deleteReviewHandler.handle(command);
     }
 

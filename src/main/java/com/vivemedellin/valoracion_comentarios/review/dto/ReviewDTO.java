@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReviewDTO {
     private Long id;
-    private String userId;
+    private UUID userId;
     private Long eventId;
     private int rating;
     private String comment;

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -37,6 +39,9 @@ public class ReviewController {
 
     @MutationMapping
     public String deleteReview(@Argument int reviewId){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String userId = (String) auth.getPrincipal(); // El sub de Supabase
+        System.out.println(userId);
         var command = new DeleteReviewCommand((long) reviewId, "user123");
         return deleteReviewHandler.handle(command);
     }

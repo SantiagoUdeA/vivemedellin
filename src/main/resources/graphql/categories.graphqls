@@ -1,0 +1,8 @@
+type Category{
+    name: String!
+    description: String!
+}
+
+extend type Query{
+    allCategories: [Category]!
+}

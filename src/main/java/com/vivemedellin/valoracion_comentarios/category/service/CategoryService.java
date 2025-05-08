@@ -28,7 +28,7 @@ public class CategoryService {
         return categories.stream().map(mapper::toDTO).toList();
     }
 
-    public List<CategoryDTO> populateDatabase(Category category){
+    public List<CategoryDTO> populateDatabase(){
         var mocks = mockFactory.createMocks();
         return this.repository.saveAll(mocks).stream().map(mapper::toDTO).toList();
     }

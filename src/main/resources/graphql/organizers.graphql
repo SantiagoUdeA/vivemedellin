@@ -1,0 +1,10 @@
+type Organizer{
+    id: String!
+    email: String!
+    firstName: String!
+    lastName: String!
+}
+
+extend type Query{
+    allOrganizers: [Organizer]!
+}

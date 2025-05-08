@@ -1,13 +1,12 @@
 package com.vivemedellin.valoracion_comentarios.category.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Table(name = "Category")
-@Data
+@Table(name = "category")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Category {
@@ -16,9 +15,9 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Column()
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 }

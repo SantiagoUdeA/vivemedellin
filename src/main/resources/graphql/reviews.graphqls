@@ -17,7 +17,7 @@ input ReviewInput {
 
 type Mutation {
     createReview(input: ReviewInput!): Review!
-    deleteReview(reviewId: Int, userId: String): String!
+    deleteReview(reviewId: Int): String!
 }
 
 type Query {

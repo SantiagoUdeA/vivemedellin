@@ -3,10 +3,12 @@ package com.vivemedellin.valoracion_comentarios.review.application.commands.dele
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 public class DeleteReviewCommand {
 
     private Long eventId;
-    private String userId;
+    private UUID userId;
 }

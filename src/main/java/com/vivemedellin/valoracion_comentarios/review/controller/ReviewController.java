@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+import java.util.UUID;
 
 
 @Controller
@@ -41,7 +42,7 @@ public class ReviewController {
     public String deleteReview(@Argument int reviewId){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = (String) auth.getPrincipal(); // El sub de Supabase
-        var command = new DeleteReviewCommand((long) reviewId, userId);
+        var command = new DeleteReviewCommand((long) reviewId, UUID.fromString(userId));
         return deleteReviewHandler.handle(command);
     }
 

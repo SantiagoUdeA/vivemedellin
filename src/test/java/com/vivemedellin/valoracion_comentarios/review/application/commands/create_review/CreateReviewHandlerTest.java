@@ -24,12 +24,15 @@ public class CreateReviewHandlerTest {
     private ReviewMapper reviewMapper;
 
     @InjectMocks
+    private ReviewMockFactory reviewMockFactory;
+
+    @InjectMocks
     private CreateReviewHandler createReviewHandler;
 
     @Test
     public void test() {
         // Arrange
-        var reviewMock = ReviewMockFactory.createReview(1L, "user123", 1L, 5, "Nice event!");
+        var reviewMock = reviewMockFactory.createReview();
 
         Review reviewEntity = new Review();
         reviewEntity.setEventId(reviewMock.getEventId());

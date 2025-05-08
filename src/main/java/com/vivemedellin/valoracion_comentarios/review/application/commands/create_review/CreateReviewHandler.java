@@ -22,12 +22,12 @@ public class CreateReviewHandler {
 
     @Transactional
     public ReviewDTO handle(CreateReviewCommand command) {
-        Review review = new Review();
-        review.setRating(command.getRating());
-        review.setComment(command.getComment());
-        review.setEventId(command.getEventId());
-        review.setUserId(command.getUserId());
-        var saved = reviewRepository.save(review);
+        var builder = Review.builder();
+        builder.rating(command.getRating());
+        builder.comment(command.getComment());
+        builder.eventId(command.getEventId());
+        builder.userId(command.getUserId());
+        var saved = reviewRepository.save(builder.build());
         return reviewMapper.toDTO(saved);
 
     }

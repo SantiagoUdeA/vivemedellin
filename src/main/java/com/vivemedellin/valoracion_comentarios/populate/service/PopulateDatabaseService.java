@@ -1,9 +1,10 @@
-package com.vivemedellin.valoracion_comentarios.shared.services;
+package com.vivemedellin.valoracion_comentarios.populate.service;
 
 import com.vivemedellin.valoracion_comentarios.category.service.CategoryService;
 import com.vivemedellin.valoracion_comentarios.organizer.service.OrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PopulateDatabaseService {
@@ -17,6 +18,7 @@ public class PopulateDatabaseService {
         this.categoryService = categoryService;
     }
 
+    @Transactional
     public void populateDatabase() {
         organizerService.populateDatabase();
         categoryService.populateDatabase();

@@ -21,10 +21,15 @@ public class DeleteReviewHandler{
     }
 
     public ReviewDto handle(DeleteReviewCommand command){
+        // Finds the review or throws exception
         var review = this.reviewRepository
                 .findById(command.getEventId())
                 .orElseThrow(() -> new NotFoundReviewException(command.getEventId()));
-        if(!review.getUser().getId().equals(command.getUserId())) throw new ForbiddenAccessException();
+
+        // Checks if user owns this review
+        if(!review.getUser().getId().equals(command.getUserId()))
+            throw new ForbiddenAccessException();
+        
         this.reviewRepository.delete(review);
         return reviewMapper.toDTO(review);
     }

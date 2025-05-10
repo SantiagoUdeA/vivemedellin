@@ -16,9 +16,21 @@ public class PopulateDatabaseController {
         this.populateDatabaseService = populateDatabaseService;
     }
 
-    @PostMapping("/populate")
+    @PostMapping("/populate/categories")
     public ResponseEntity<String> populateDatabase(){
-        populateDatabaseService.populateDatabase();
-        return ResponseEntity.ok("Database populated successfully");
+        populateDatabaseService.populateCategories();
+        return ResponseEntity.ok("Categories populated successfully");
+    }
+
+    @PostMapping("/populate/organizers")
+    public ResponseEntity<String> populateOrganizers(){
+        populateDatabaseService.populateOrganizers();
+        return ResponseEntity.ok("Organizers populated successfully");
+    }
+
+    @PostMapping("/populate/events")
+    public ResponseEntity<String> populateEvents(){
+        populateDatabaseService.populateEvents();
+        return ResponseEntity.ok("Event populated successfully");
     }
 }

@@ -1,0 +1,14 @@
+type Event {
+    id: ID!
+    organizer: Organizer
+    title: String!
+    description: String
+    date: String!
+    location: String!
+    category: Category
+    price: Float!
+}
+
+extend type Query{
+    allEvents: [Event]
+}

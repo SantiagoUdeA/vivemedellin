@@ -1,27 +1,35 @@
 package com.vivemedellin.valoracion_comentarios.populate.service;
 
 import com.vivemedellin.valoracion_comentarios.category.service.CategoryService;
+import com.vivemedellin.valoracion_comentarios.event.service.EventService;
 import com.vivemedellin.valoracion_comentarios.organizer.service.OrganizerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PopulateDatabaseService {
 
     private final OrganizerService organizerService;
     private final CategoryService categoryService;
+    private final EventService eventService;
 
     @Autowired
-    public PopulateDatabaseService(OrganizerService organizerService, CategoryService categoryService) {
+    public PopulateDatabaseService(OrganizerService organizerService, CategoryService categoryService, EventService eventService) {
         this.organizerService = organizerService;
         this.categoryService = categoryService;
+        this.eventService = eventService;
     }
 
-    @Transactional
-    public void populateDatabase() {
-        organizerService.populateDatabase();
-        categoryService.populateDatabase();
-        System.out.println("Database populated with fake data successfully");
+    public void populateOrganizers(){
+        this.organizerService.populateDatabase();
     }
+
+    public void populateCategories(){
+        this.categoryService.populateDatabase();
+    }
+
+    public void populateEvents(){
+        this.eventService.populateDatabase();
+    }
+
 }

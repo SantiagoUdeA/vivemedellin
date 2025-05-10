@@ -6,7 +6,8 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.delet
 import com.vivemedellin.valoracion_comentarios.review.application.commands.delete_review.DeleteReviewHandler;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
-import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDTO;
+import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
+import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -34,12 +35,22 @@ public class ReviewController {
     }
 
     @MutationMapping
-    public ReviewDTO createReview(@Argument("input") CreateReviewCommand command){
+    public ReviewDto createReview(
+            @Argument  String userId,
+            @Argument int eventId,
+            @Argument int rating,
+            @Argument String comment
+    ){
+        var command = new CreateReviewCommand(
+                UUID.fromString(userId),
+                (long) eventId,
+                rating,
+                comment);
         return this.createReviewHandler.handle(command);
     }
 
     @MutationMapping
-    public String deleteReview(@Argument int reviewId){
+    public ReviewDto deleteReview(@Argument int reviewId){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String userId = (String) auth.getPrincipal(); // El sub de Supabase
         var command = new DeleteReviewCommand((long) reviewId, UUID.fromString(userId));
@@ -47,7 +58,7 @@ public class ReviewController {
     }
 
     @QueryMapping
-    public List<ReviewDTO> allReviewsByEventId(@Argument int eventId){
+    public List<ReviewDto> allReviewsByEventId(@Argument int eventId){
         var command = new GetReviewsByEventIdCommand((long) eventId);
         return getReviewsByEventIdHandler.handle(command);
     }

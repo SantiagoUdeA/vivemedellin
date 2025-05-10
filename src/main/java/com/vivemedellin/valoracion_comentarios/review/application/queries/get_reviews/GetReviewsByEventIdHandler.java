@@ -1,6 +1,6 @@
 package com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews;
 
-import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDTO;
+import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class GetReviewsByEventIdHandler {
         this.reviewMapper = reviewMapper;
     }
 
-    public List<ReviewDTO> handle(GetReviewsByEventIdCommand command){
+    public List<ReviewDto> handle(GetReviewsByEventIdCommand command){
         var reviews = reviewRepository.findAllByEventId(command.getEventId());
         return reviews.stream().map(reviewMapper::toDTO).toList();
     }

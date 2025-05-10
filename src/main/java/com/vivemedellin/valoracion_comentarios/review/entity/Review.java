@@ -1,53 +1,51 @@
 package com.vivemedellin.valoracion_comentarios.review.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
+import com.vivemedellin.valoracion_comentarios.event.entity.Event;
+import com.vivemedellin.valoracion_comentarios.user.entity.User;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
+import java.time.Instant;
 
-@Entity
-@Table(name = "review")
 @Getter
 @Setter
+@Entity
 @Builder
-@AllArgsConstructor
+@Table(name = "review")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Review {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private UUID userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(nullable = false)
-    private Long eventId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "event_id")
+    private Event event;
 
-    @Min(1)
-    @Max(5)
-    @Column(nullable = false)
-    private int rating;
+    @NotNull
+    @Column(name = "rating", nullable = false)
+    private Integer rating;
 
-    @Column()
+    @Column(name = "comment", length = Integer.MAX_VALUE)
     private String comment;
 
-    @CreationTimestamp
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    @ColumnDefault("CURRENT_TIMESTAMP")
+    @Column(name = "created_at")
+    private Instant createdAt;
 
-    @UpdateTimestamp
-    @Column()
-    private LocalDateTime updatedAt;
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
 }
-

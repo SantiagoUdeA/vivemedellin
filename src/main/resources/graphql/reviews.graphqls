@@ -8,16 +8,14 @@ type Review {
     updatedAt: String
 }
 
-input ReviewInput {
-    userId: String!
-    eventId: Int!
-    rating: Int!
-    comment: String
-}
-
 type Mutation {
-    createReview(input: ReviewInput!): Review!
-    deleteReview(reviewId: Int): String!
+    createReview(
+        userId: String!
+        eventId: Int!
+        rating: Int!
+        comment: String
+    ): Review!
+    deleteReview(reviewId: Int): Review!
 }
 
 type Query {

@@ -5,6 +5,7 @@ import com.vivemedellin.valoracion_comentarios.category.dto.CategoryDTO;
 import com.vivemedellin.valoracion_comentarios.event.entity.Event;
 import com.vivemedellin.valoracion_comentarios.organizer.dto.OrganizerDTO;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Value;
 import org.hibernate.validator.constraints.Length;
 
@@ -15,28 +16,20 @@ import java.time.Instant;
 /**
  * DTO for {@link Event}
  */
-@Value
+@Data
 public class EventDTO implements Serializable {
     Long id;
     AdminDto admin;
     OrganizerDTO organizer;
-    @NotNull
     @Size(max = 100)
-    @NotEmpty
-    @NotBlank
     @Length(max = 100)
     String title;
     String description;
-    @NotNull
     Instant date;
-    @NotNull
     @Size(max = 100)
-    @NotEmpty
-    @NotBlank
     @Length(max = 100)
     String location;
     CategoryDTO category;
-    @NotNull
     @Digits(integer = 10, fraction = 2)
     @PositiveOrZero
     BigDecimal price;

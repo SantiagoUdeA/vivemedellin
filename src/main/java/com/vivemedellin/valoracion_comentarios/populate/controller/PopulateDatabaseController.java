@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/populate")
 public class PopulateDatabaseController {
 
     private final PopulateDatabaseService populateDatabaseService;
@@ -16,19 +19,19 @@ public class PopulateDatabaseController {
         this.populateDatabaseService = populateDatabaseService;
     }
 
-    @PostMapping("/populate/categories")
+    @PostMapping("/categories")
     public ResponseEntity<String> populateDatabase(){
         populateDatabaseService.populateCategories();
         return ResponseEntity.ok("Categories populated successfully");
     }
 
-    @PostMapping("/populate/organizers")
+    @PostMapping("/organizers")
     public ResponseEntity<String> populateOrganizers(){
         populateDatabaseService.populateOrganizers();
         return ResponseEntity.ok("Organizers populated successfully");
     }
 
-    @PostMapping("/populate/events")
+    @PostMapping("/events")
     public ResponseEntity<String> populateEvents(){
         populateDatabaseService.populateEvents();
         return ResponseEntity.ok("Event populated successfully");

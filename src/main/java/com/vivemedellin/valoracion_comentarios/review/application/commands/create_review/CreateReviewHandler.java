@@ -5,6 +5,7 @@ import com.vivemedellin.valoracion_comentarios.event.mapper.EventMapper;
 import com.vivemedellin.valoracion_comentarios.event.repository.EventRepository;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import com.vivemedellin.valoracion_comentarios.review.entity.Review;
+import com.vivemedellin.valoracion_comentarios.review.exceptions.UserAlreadyReviewedException;
 import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
 import com.vivemedellin.valoracion_comentarios.user.dto.UserDto;
@@ -43,6 +44,11 @@ public class CreateReviewHandler {
 
         reviewBuilder.event(eventMapper.toEntity(eventDto));
         reviewBuilder.user(userMapper.toEntity(userDto));
+
+        // Checks that user has not reviewed
+        if (reviewRepository.findByEventIdAndUserId(command.getEventId(), command.getUserId()).isPresent()) {
+            throw new UserAlreadyReviewedException();
+        }
 
         var saved = reviewRepository.save(reviewBuilder.build());
         return reviewMapper.toDTO(saved);

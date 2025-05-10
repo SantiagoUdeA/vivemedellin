@@ -9,6 +9,6 @@ type Event {
     price: Float!
 }
 
-extend type Query{
-    allEvents: [Event]
+extend type Query {
+    allEvents: [Event]!
 }

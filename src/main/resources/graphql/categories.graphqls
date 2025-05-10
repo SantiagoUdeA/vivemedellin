@@ -4,6 +4,6 @@ type Category{
     description: String!
 }
 
-extend type Query{
+extend type Query {
     allCategories: [Category]!
 }

@@ -5,6 +5,6 @@ type Organizer{
     lastName: String!
 }
 
-extend type Query{
+extend type Query {
     allOrganizers: [Organizer]!
 }

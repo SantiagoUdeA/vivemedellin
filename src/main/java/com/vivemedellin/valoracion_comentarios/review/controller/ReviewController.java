@@ -4,6 +4,8 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.creat
 import com.vivemedellin.valoracion_comentarios.review.application.commands.create_review.CreateReviewHandler;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.delete_review.DeleteReviewCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.delete_review.DeleteReviewHandler;
+import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewCommand;
+import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewHandler;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
@@ -26,23 +28,26 @@ public class ReviewController {
     private final CreateReviewHandler createReviewHandler;
     private final GetReviewsByEventIdHandler getReviewsByEventIdHandler;
     private final DeleteReviewHandler deleteReviewHandler;
+    private final UpdateReviewHandler updateReviewHandler;
 
     @Autowired
-    public ReviewController(CreateReviewHandler createReviewHandler, GetReviewsByEventIdHandler getReviewsByEventIdHandler, DeleteReviewHandler deleteReviewHandler) {
+    public ReviewController(CreateReviewHandler createReviewHandler, GetReviewsByEventIdHandler getReviewsByEventIdHandler, DeleteReviewHandler deleteReviewHandler, UpdateReviewHandler updateReviewHandler) {
         this.createReviewHandler = createReviewHandler;
         this.getReviewsByEventIdHandler = getReviewsByEventIdHandler;
         this.deleteReviewHandler = deleteReviewHandler;
+        this.updateReviewHandler = updateReviewHandler;
     }
 
     @MutationMapping
     public ReviewDto createReview(
-            @Argument  String userId,
             @Argument int eventId,
             @Argument int rating,
             @Argument String comment
     ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        var userId = UUID.fromString((String) auth.getPrincipal());
         var command = new CreateReviewCommand(
-                UUID.fromString(userId),
+                userId,
                 (long) eventId,
                 rating,
                 comment);
@@ -55,6 +60,18 @@ public class ReviewController {
         String userId = (String) auth.getPrincipal(); // El sub de Supabase
         var command = new DeleteReviewCommand((long) reviewId, UUID.fromString(userId));
         return deleteReviewHandler.handle(command);
+    }
+
+    @MutationMapping
+    public ReviewDto updateReview(
+            @Argument int reviewId,
+            @Argument int rating,
+            @Argument String comment
+    ){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UUID userId = UUID.fromString((String) auth.getPrincipal());
+        var command = new UpdateReviewCommand((long) reviewId, userId, rating, comment);
+        return updateReviewHandler.handle(command);
     }
 
     @QueryMapping

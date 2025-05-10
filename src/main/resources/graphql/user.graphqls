@@ -1,0 +1,5 @@
+type User{
+    id: String!
+    display_name: String!
+    email: String!
+}

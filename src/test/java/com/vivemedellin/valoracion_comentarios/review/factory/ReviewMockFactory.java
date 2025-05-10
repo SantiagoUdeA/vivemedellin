@@ -1,7 +1,7 @@
 package com.vivemedellin.valoracion_comentarios.review.factory;
 
 import com.vivemedellin.valoracion_comentarios.review.entity.Review;
-import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDTO;
+import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 

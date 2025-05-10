@@ -3,11 +3,10 @@ package com.vivemedellin.valoracion_comentarios.review.entity;
 import com.vivemedellin.valoracion_comentarios.event.entity.Event;
 import com.vivemedellin.valoracion_comentarios.user.entity.User;
 import jakarta.persistence.*;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.*;
 
 import java.time.Instant;
 
@@ -41,10 +40,12 @@ public class Review {
     @Column(name = "comment", length = Integer.MAX_VALUE)
     private String comment;
 
+    @CreationTimestamp
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
     private Instant updatedAt;
 

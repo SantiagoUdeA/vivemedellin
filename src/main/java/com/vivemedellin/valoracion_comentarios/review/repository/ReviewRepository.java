@@ -12,4 +12,6 @@ import java.util.UUID;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findAllByEventId(Long eventId);
     Optional<Review> findByEventIdAndUserId(Long eventId, UUID userId);
+    Optional<Review> findByIdAndUserId(Long eventId, UUID userId);
+
 }

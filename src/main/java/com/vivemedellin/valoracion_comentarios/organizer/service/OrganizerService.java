@@ -24,10 +24,6 @@ public class OrganizerService {
         this.organizerMockFactory = organizerMockFactory;
     }
 
-    public List<OrganizerDTO> findAll() {
-        return repository.findAll().stream().map(mapper::toDTO).toList();
-    }
-
     public List<OrganizerDTO> populateDatabase(){
         List<OrganizerDTO> organizers = new ArrayList<>();
         for (int i = 0; i < 10; i++) {

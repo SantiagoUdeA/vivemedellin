@@ -4,9 +4,9 @@ import com.vivemedellin.valoracion_comentarios.shared.exceptions.BadRequestExcep
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.NotFoundException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
-import graphql.validation.ValidationError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,7 +22,7 @@ public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter 
     private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @Override
-    protected GraphQLError resolveToSingleError(Throwable ex,  DataFetchingEnvironment env) {
+    protected GraphQLError resolveToSingleError(@NonNull Throwable ex, @NonNull DataFetchingEnvironment env) {
 
         String message = "Internal server error";
 

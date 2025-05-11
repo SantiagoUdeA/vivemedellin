@@ -9,7 +9,6 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.updat
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
-import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;

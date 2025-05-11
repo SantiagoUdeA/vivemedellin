@@ -3,6 +3,8 @@ package com.vivemedellin.valoracion_comentarios.auth;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.NonNullApi;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,8 +25,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
@@ -37,20 +39,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .parseClaimsJws(token)
                         .getBody();
 
-                String userId = claims.getSubject(); // "sub" = ID del usuario Supabase
-                List<String> roles = claims.get("roles", List.class);  // Obtener roles del JWT
+                String userId = claims.getSubject();
+                List<String> roles = claims.get("roles", List.class);
 
                 // Crear una lista de autoridades basadas en los roles del JWT
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 for (String role : roles) {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role));  // Prefijo ROLE_ es obligatorio en Spring Security
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
                 }
 
                 // Crear la autenticación con los roles (autoridades)
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
         }
 

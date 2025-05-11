@@ -15,6 +15,7 @@ public class GetReviewsByEventIdHandler {
     private final ReviewMapper reviewMapper;
 
     @Autowired
+    // TODO Allow non auth users
     public GetReviewsByEventIdHandler(ReviewRepository reviewRepository, ReviewMapper reviewMapper) {
         this.reviewRepository = reviewRepository;
         this.reviewMapper = reviewMapper;

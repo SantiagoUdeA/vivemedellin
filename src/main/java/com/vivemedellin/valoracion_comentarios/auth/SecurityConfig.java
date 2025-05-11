@@ -22,8 +22,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/graphql").hasRole("user")  // Solo usuarios con rol USER pueden acceder a /graphql
-                .requestMatchers("/admin/**").hasRole("admin")  // Solo administradores pueden acceder a /admin
+                .requestMatchers("/graphql").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

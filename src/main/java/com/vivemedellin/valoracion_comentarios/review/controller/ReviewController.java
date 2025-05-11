@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -44,7 +46,7 @@ public class ReviewController {
             @Argument int rating,
             @Argument String comment
     ){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = getAuthentication();
         var userId = UUID.fromString((String) auth.getPrincipal());
         var command = new CreateReviewCommand(
                 userId,
@@ -56,7 +58,7 @@ public class ReviewController {
 
     @MutationMapping
     public ReviewDto deleteReview(@Argument int reviewId){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = getAuthentication();
         String userId = (String) auth.getPrincipal(); // El sub de Supabase
         var command = new DeleteReviewCommand((long) reviewId, UUID.fromString(userId));
         return deleteReviewHandler.handle(command);
@@ -68,7 +70,7 @@ public class ReviewController {
             @Argument int rating,
             @Argument String comment
     ){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = getAuthentication();
         UUID userId = UUID.fromString((String) auth.getPrincipal());
         var command = new UpdateReviewCommand((long) reviewId, userId, rating, comment);
         return updateReviewHandler.handle(command);
@@ -78,6 +80,14 @@ public class ReviewController {
     public List<ReviewDto> allReviewsByEventId(@Argument int eventId){
         var command = new GetReviewsByEventIdCommand((long) eventId);
         return getReviewsByEventIdHandler.handle(command);
+    }
+
+    private Authentication getAuthentication() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
+        }
+        return auth;
     }
 
 }

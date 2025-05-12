@@ -8,9 +8,9 @@
 		<version>3.4.5</version>
 		<relativePath/>
 	</parent>
-	<groupId>com.udea</groupId>
-	<artifactId>bancoudea</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.vivemedellin</groupId>
+	<artifactId>valoracion_comentarios</artifactId>
+	<version>0.0.1</version>
 	<name>Sistema de valoracion y comentarios</name>
 	<description>Módulo encargado de gestionar el sistema de valoración y comentarios para los usuarios de la aplicación ViveMedellín.</description>
 	<url/>

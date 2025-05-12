@@ -31,7 +31,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
   trigger-deploy:
-    needs: [build_and_push_to_docker]
+    needs: [build-and-push-to-docker]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Render Deploy Hook

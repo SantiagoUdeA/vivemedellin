@@ -1,13 +1,15 @@
 package com.vivemedellin.valoracion_comentarios.shared;
 
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.BadRequestException;
+import com.vivemedellin.valoracion_comentarios.shared.exceptions.ForbiddenAccessException;
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.NotFoundException;
-import com.vivemedellin.valoracion_comentarios.shared.exceptions.UnauthorizedAccessException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.lang.NonNull;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.graphql.execution.DataFetcherExceptionResolverAdapter;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -30,10 +32,13 @@ public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter 
         if (
                 ex instanceof NotFoundException ||
                 ex instanceof BadRequestException ||
-                ex instanceof UnauthorizedAccessException
+                ex instanceof ForbiddenAccessException
         ){
             message = ex.getMessage();
-        }else{
+        }else if( ex instanceof AccessDeniedException || ex instanceof AuthenticationException){
+            message = "Invalid or expired token";
+        }
+        else{
             logger.error(ex.getMessage());
             logger.error(Arrays.toString(ex.getStackTrace()));
         }

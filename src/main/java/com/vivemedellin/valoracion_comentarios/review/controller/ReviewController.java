@@ -14,11 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -41,13 +40,13 @@ public class ReviewController {
     }
 
     @MutationMapping
+    @PreAuthorize("hasRole('user')")
     public ReviewDto createReview(
             @Argument int eventId,
             @Argument int rating,
             @Argument String comment
     ){
-        Authentication auth = getAuthentication();
-        var userId = UUID.fromString((String) auth.getPrincipal());
+        var userId = getUserId();
         var command = new CreateReviewCommand(
                 userId,
                 (long) eventId,
@@ -57,21 +56,21 @@ public class ReviewController {
     }
 
     @MutationMapping
+    @PreAuthorize("hasRole('user')")
     public ReviewDto deleteReview(@Argument int reviewId){
-        Authentication auth = getAuthentication();
-        String userId = (String) auth.getPrincipal(); // El sub de Supabase
-        var command = new DeleteReviewCommand((long) reviewId, UUID.fromString(userId));
+        var userId = getUserId();
+        var command = new DeleteReviewCommand((long) reviewId, userId);
         return deleteReviewHandler.handle(command);
     }
 
     @MutationMapping
+    @PreAuthorize("hasRole('user')")
     public ReviewDto updateReview(
             @Argument int reviewId,
             @Argument int rating,
             @Argument String comment
     ){
-        Authentication auth = getAuthentication();
-        UUID userId = UUID.fromString((String) auth.getPrincipal());
+        var userId = getUserId();
         var command = new UpdateReviewCommand((long) reviewId, userId, rating, comment);
         return updateReviewHandler.handle(command);
     }
@@ -82,12 +81,12 @@ public class ReviewController {
         return getReviewsByEventIdHandler.handle(command);
     }
 
-    private Authentication getAuthentication() {
+    private UUID getUserId() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
             throw new UnauthorizedAccessException();
         }
-        return auth;
+        return UUID.fromString((String) auth.getPrincipal());
     }
 
 }

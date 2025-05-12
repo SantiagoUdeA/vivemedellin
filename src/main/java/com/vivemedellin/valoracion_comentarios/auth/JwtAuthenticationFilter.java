@@ -41,13 +41,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String userId = claims.getSubject();
                 List<String> roles = claims.get("roles", List.class);
 
-                // Crear una lista de autoridades basadas en los roles del JWT
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 for (String role : roles) {
                     authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
                 }
 
-                // Crear la autenticación con los roles (autoridades)
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userId, null, authorities);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -60,7 +58,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        // Opcional: evitar filtrar endpoints públicos
         return !request.getServletPath().equals("/graphql");
     }
 }

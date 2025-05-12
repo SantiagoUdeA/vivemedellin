@@ -181,6 +181,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>valoracion-comentarios</finalName>
 	</build>
 
 </project>

@@ -2,6 +2,7 @@ package com.vivemedellin.valoracion_comentarios.shared;
 
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.BadRequestException;
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.NotFoundException;
+import com.vivemedellin.valoracion_comentarios.shared.exceptions.UnauthorizedAccessException;
 import graphql.GraphQLError;
 import graphql.GraphqlErrorBuilder;
 import org.slf4j.Logger;
@@ -26,7 +27,11 @@ public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter 
 
         String message = "Internal server error";
 
-        if (ex instanceof NotFoundException || ex instanceof BadRequestException){
+        if (
+                ex instanceof NotFoundException ||
+                ex instanceof BadRequestException ||
+                ex instanceof UnauthorizedAccessException
+        ){
             message = ex.getMessage();
         }else{
             logger.error(ex.getMessage());

@@ -9,6 +9,7 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.updat
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
+import com.vivemedellin.valoracion_comentarios.shared.exceptions.UnauthorizedAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -84,7 +85,7 @@ public class ReviewController {
     private Authentication getAuthentication() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || !auth.isAuthenticated()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Not authenticated");
+            throw new UnauthorizedAccessException();
         }
         return auth;
     }

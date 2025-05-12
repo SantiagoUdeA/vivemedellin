@@ -10,7 +10,6 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -29,5 +28,5 @@ jobs:
         tags: latest
         registry: docker.io
         dockerfile: Dockerfile
-        username: { { secrets.DOCKER_USERNAME } }
-        password: { { secrets.DOCKER_PASSWORD } }
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}

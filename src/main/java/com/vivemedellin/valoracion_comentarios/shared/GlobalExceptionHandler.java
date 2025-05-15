@@ -35,10 +35,11 @@ public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter 
                 ex instanceof ForbiddenAccessException
         ){
             message = ex.getMessage();
-        }else if( ex instanceof AccessDeniedException || ex instanceof AuthenticationException){
+        }else if(ex instanceof  AccessDeniedException){
+            message = "You don't have permission to access this resource";
+        }else if(ex instanceof AuthenticationException){
             message = "Invalid or expired token";
-        }
-        else{
+        } else{
             logger.error(ex.getMessage());
             logger.error(Arrays.toString(ex.getStackTrace()));
         }

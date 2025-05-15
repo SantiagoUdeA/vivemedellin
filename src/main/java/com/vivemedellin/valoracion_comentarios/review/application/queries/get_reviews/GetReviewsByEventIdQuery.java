@@ -7,7 +7,7 @@ import org.springframework.format.annotation.NumberFormat;
 
 @Data
 @AllArgsConstructor
-public class GetReviewsByEventIdCommand {
+public class GetReviewsByEventIdQuery {
     @NumberFormat(style = NumberFormat.Style.NUMBER)
     @NonNull
     private Long eventId;

@@ -6,7 +6,7 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.delet
 import com.vivemedellin.valoracion_comentarios.review.application.commands.delete_review.DeleteReviewHandler;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewHandler;
-import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdCommand;
+import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdQuery;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.UnauthorizedAccessException;
@@ -77,8 +77,8 @@ public class ReviewController {
 
     @QueryMapping
     public List<ReviewDto> allReviewsByEventId(@Argument int eventId){
-        var command = new GetReviewsByEventIdCommand((long) eventId);
-        return getReviewsByEventIdHandler.handle(command);
+        var query= new GetReviewsByEventIdQuery((long) eventId);
+        return getReviewsByEventIdHandler.handle(query);
     }
 
     private UUID getUserId() {

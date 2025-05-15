@@ -21,8 +21,8 @@ public class GetReviewsByEventIdHandler {
         this.reviewMapper = reviewMapper;
     }
 
-    public List<ReviewDto> handle(@Valid GetReviewsByEventIdCommand command){
-        var reviews = reviewRepository.findAllByEventId(command.getEventId());
+    public List<ReviewDto> handle(@Valid GetReviewsByEventIdQuery query){
+        var reviews = reviewRepository.findAllByEventId(query.getEventId());
         return reviews.stream().map(reviewMapper::toDTO).toList();
     }
 }

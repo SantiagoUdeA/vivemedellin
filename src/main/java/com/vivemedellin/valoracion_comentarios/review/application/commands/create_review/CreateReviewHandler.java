@@ -10,6 +10,7 @@ import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
 import com.vivemedellin.valoracion_comentarios.user.dto.UserDto;
 import com.vivemedellin.valoracion_comentarios.user.mapper.UserMapper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,7 +37,7 @@ public class CreateReviewHandler {
     }
 
     @Transactional
-    public ReviewDto handle(CreateReviewCommand command) {
+    public ReviewDto handle(@Valid CreateReviewCommand command) {
         // Throws if user has already reviewed
         if (reviewRepository.findByEventIdAndUserId(command.getEventId(), command.getUserId()).isPresent()) {
             throw new UserAlreadyReviewedException();

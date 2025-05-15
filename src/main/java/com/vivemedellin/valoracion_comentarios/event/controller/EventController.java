@@ -1,4 +1,4 @@
-package com.vivemedellin.valoracion_comentarios.event;
+package com.vivemedellin.valoracion_comentarios.event.controller;
 
 import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
 import com.vivemedellin.valoracion_comentarios.event.service.EventService;

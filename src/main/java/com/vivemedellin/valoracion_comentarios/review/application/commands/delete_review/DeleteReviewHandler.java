@@ -5,6 +5,7 @@ import com.vivemedellin.valoracion_comentarios.review.exceptions.NotFoundReviewE
 import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
 import com.vivemedellin.valoracion_comentarios.shared.exceptions.ForbiddenAccessException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class DeleteReviewHandler{
         this.reviewMapper = reviewMapper;
     }
 
-    public ReviewDto handle(DeleteReviewCommand command){
+    public ReviewDto handle(@Valid DeleteReviewCommand command){
         // Finds the review or throws exception
         var review = this.reviewRepository
                 .findById(command.getEventId())

@@ -32,6 +32,11 @@ public class CreateReviewHandler {
 
     @Transactional
     public ReviewDto handle(CreateReviewCommand command) {
+        // Throws if user has already reviewed
+        if (reviewRepository.findByEventIdAndUserId(command.getEventId(), command.getUserId()).isPresent()) {
+            throw new UserAlreadyReviewedException();
+        }
+
         var reviewBuilder = Review.builder();
         var eventDto = new EventDTO();
         var userDto = new UserDto();
@@ -44,11 +49,6 @@ public class CreateReviewHandler {
 
         reviewBuilder.event(eventMapper.toEntity(eventDto));
         reviewBuilder.user(userMapper.toEntity(userDto));
-
-        // Checks that user has not reviewed
-        if (reviewRepository.findByEventIdAndUserId(command.getEventId(), command.getUserId()).isPresent()) {
-            throw new UserAlreadyReviewedException();
-        }
 
         var saved = reviewRepository.save(reviewBuilder.build());
         return reviewMapper.toDTO(saved);

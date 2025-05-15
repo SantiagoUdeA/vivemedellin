@@ -23,7 +23,12 @@ public class CreateReviewHandler {
     private final EventMapper eventMapper;
 
     @Autowired
-    public CreateReviewHandler(ReviewRepository reviewRepository, ReviewMapper reviewMapper, EventRepository eventRepository, UserMapper userMapper, EventMapper eventMapper) {
+    public CreateReviewHandler(
+            ReviewRepository reviewRepository,
+            ReviewMapper reviewMapper,
+            UserMapper userMapper,
+            EventMapper eventMapper
+    ) {
         this.reviewRepository = reviewRepository;
         this.reviewMapper = reviewMapper;
         this.userMapper = userMapper;

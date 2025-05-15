@@ -15,6 +15,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -41,10 +42,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 String userId = claims.getSubject();
                 List<String> roles = claims.get("roles", List.class);
 
+                Map<String, Object> appMetadata = claims.get("app_metadata", Map.class);
+                System.out.println(appMetadata.toString());
+                String role = (appMetadata != null) ? (String) appMetadata.getOrDefault("role", "user") : "user";
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                for (String role : roles) {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
-                }
+                authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(userId, null, authorities);

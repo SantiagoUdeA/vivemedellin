@@ -3,6 +3,7 @@ package com.vivemedellin.valoracion_comentarios.review.application.queries.get_r
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ public class GetReviewsByEventIdHandler {
         this.reviewMapper = reviewMapper;
     }
 
-    public List<ReviewDto> handle(GetReviewsByEventIdCommand command){
+    public List<ReviewDto> handle(@Valid GetReviewsByEventIdCommand command){
         var reviews = reviewRepository.findAllByEventId(command.getEventId());
         return reviews.stream().map(reviewMapper::toDTO).toList();
     }

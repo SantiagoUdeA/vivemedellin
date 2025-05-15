@@ -2,7 +2,6 @@ package com.vivemedellin.valoracion_comentarios.review.application.commands.crea
 
 import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
 import com.vivemedellin.valoracion_comentarios.event.mapper.EventMapper;
-import com.vivemedellin.valoracion_comentarios.event.repository.EventRepository;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
 import com.vivemedellin.valoracion_comentarios.review.entity.Review;
 import com.vivemedellin.valoracion_comentarios.review.exceptions.UserAlreadyReviewedException;

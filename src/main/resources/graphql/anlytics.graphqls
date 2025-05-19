@@ -1,0 +1,55 @@
+enum Sentiment {
+    """Type of detected sentiment"""
+    POSITIVE
+    NEUTRAL
+    NEGATIVE
+}
+
+type SentimentSummary {
+    """Identified sentiment"""
+    sentiment: Sentiment!
+    """Number of reviews with this sentiment"""
+    count: Int!
+    """Percentage relative to the total"""
+    percentage: Float!
+}
+
+type RatingDistribution {
+    """Number of stars (1 to 5)"""
+    stars: Int!
+    """Number of reviews with this star rating"""
+    count: Int!
+    """Percentage relative to the total"""
+    percentage: Float!
+}
+
+type EventSatisfactionReport {
+    """Event ID"""
+    eventId: ID!
+    """Event name"""
+    eventName: String!
+    """Average rating for the event"""
+    averageRating: Float!
+    """Total number of reviews analyzed"""
+    totalReviews: Int!
+    """Distribution of ratings by stars"""
+    ratingDistribution: [RatingDistribution!]!
+    """Summary of sentiment analysis (optional)"""
+    sentimentSummary: [SentimentSummary!]
+}
+
+input ReportFilterInput {
+    """Type of event (optional)"""
+    eventType: String
+    """Start date (YYYY-MM-DD)"""
+    fromDate: String
+    """End date (YYYY-MM-DD)"""
+    toDate: String
+    """Organizer ID (optional)"""
+    organizerId: ID
+}
+
+extend type Query {
+    """Fetch user satisfaction reports with optional filters"""
+    userSatisfactionDashboard(filter: ReportFilterInput): [EventSatisfactionReport!]!
+}

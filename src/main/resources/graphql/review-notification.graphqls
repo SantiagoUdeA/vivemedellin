@@ -1,0 +1,10 @@
+type ReviewNotification {
+    id: ID!
+    reviewId: Int
+    createdAt: String
+    checked: Boolean
+}
+
+extend type Query {
+    allReviewNotifications: [ReviewNotification]!
+}

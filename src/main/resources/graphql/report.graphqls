@@ -1,0 +1,26 @@
+enum ReportReason {
+    SPAM
+    OFFENSIVE
+    INAPPROPRIATE
+    PERSONAL_INFORMATION
+    ADVERTISING
+}
+
+type Report {
+    id: ID!
+    reviewId: Int!
+    reason: ReportReason!
+}
+
+input CreateReportInput {
+    reviewId: Int!
+    reason: ReportReason!
+}
+
+extend type Mutation {
+    createReport(input: CreateReportInput!): Report!
+}
+
+extend type Query {
+    allReports: [Report!]!
+}

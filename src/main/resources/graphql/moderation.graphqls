@@ -1,0 +1,13 @@
+input UpdateReviewModerationInput{
+    reviewId: Int
+    comment: Int
+}
+
+input DeleteReviewModerationInput{
+    reviewId: Int
+}
+
+extend type Mutation {
+    updateReviewModeration(input: UpdateReviewModerationInput): [Review]!
+    deleteReviewModeration(input: DeleteReviewModerationInput): [Review]!
+}

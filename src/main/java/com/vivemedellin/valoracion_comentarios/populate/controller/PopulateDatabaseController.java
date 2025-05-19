@@ -19,7 +19,7 @@ public class PopulateDatabaseController {
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<String> populateDatabase(){
+    public ResponseEntity<String> populateCategories(){
         populateDatabaseService.populateCategories();
         return ResponseEntity.ok("Categories populated successfully");
     }

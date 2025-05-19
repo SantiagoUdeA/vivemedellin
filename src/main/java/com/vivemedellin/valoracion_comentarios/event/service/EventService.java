@@ -42,7 +42,7 @@ EventService {
         return events.stream().map(eventMapper::toDTO).toList();
     }
 
-    public void populateDatabase(){
+    public EventDTO populateDatabase(){
         final Faker faker = new Faker();
         var categories = categoryRepository.findAll();
         var organizers = organizerRepository.findAll();
@@ -67,6 +67,6 @@ EventService {
                 (Organizer)  faker.options().option(organizers.toArray())
         );
 
-        eventRepository.save(event);
+        return eventMapper.toDTO(eventRepository.save(event));
     }
 }

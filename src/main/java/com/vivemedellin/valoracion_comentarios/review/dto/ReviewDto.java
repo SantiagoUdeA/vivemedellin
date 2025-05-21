@@ -22,14 +22,9 @@ import java.time.Instant;
 @Getter
 @Setter
 public class ReviewDto implements Serializable {
-    @Positive
     private Long id;
     private UserDto user;
     private EventDTO event;
-    @NotNull
-    @Digits(integer = 1, fraction = 0)
-    @Positive
-    @Range(min = 1, max = 5)
     private Integer rating;
     private String comment;
     private Instant createdAt;

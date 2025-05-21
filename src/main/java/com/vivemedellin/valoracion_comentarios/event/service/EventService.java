@@ -5,6 +5,7 @@ import com.vivemedellin.valoracion_comentarios.admin.repository.AdminRepository;
 import com.vivemedellin.valoracion_comentarios.category.entity.Category;
 import com.vivemedellin.valoracion_comentarios.category.service.CategoryRepository;
 import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
+import com.vivemedellin.valoracion_comentarios.event.dto.EventWithReviewStatsDTO;
 import com.vivemedellin.valoracion_comentarios.event.factory.EventMockFactory;
 import com.vivemedellin.valoracion_comentarios.event.mapper.EventMapper;
 import com.vivemedellin.valoracion_comentarios.event.repository.EventRepository;
@@ -37,9 +38,8 @@ EventService {
         this.eventMapper = eventMapper;
     }
 
-    public List<EventDTO> getAll(){
-        var events = eventRepository.findAll();
-        return events.stream().map(eventMapper::toDTO).toList();
+    public List<EventWithReviewStatsDTO> getAll(){
+        return eventRepository.findAllWithReviewStats();
     }
 
     public EventDTO populateDatabase(){
@@ -59,7 +59,6 @@ EventService {
         if (admins.isEmpty()) {
             throw new IllegalStateException("No admins found. Cannot create event.");
         }
-
 
         var event = eventMockFactory.createEvent(
                 (Admin) faker.options().option(admins.toArray()),

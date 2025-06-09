@@ -1,7 +1,6 @@
 type Review {
-    id: String!
+    id: Int!
     user: User!
-    event: Event!
     rating: Int!
     comment: String
     createdAt: String!
@@ -10,11 +9,11 @@ type Review {
 
 type Mutation {
     createReview(
-        eventId: Int!
+        eventId: String!
         rating: Int!
         comment: String
     ): Review!
-    deleteReview(reviewId: Int): Review!
+    deleteReview(reviewId: Int!): Review!
     updateReview(
         reviewId: Int!
         rating: Int
@@ -22,6 +21,8 @@ type Mutation {
     ): Review!
 }
 
+
 type Query {
     allReviewsByEventId(eventId: Int!): [Review!]!
+    reviewByEventId(eventId: Int!): Review
 }

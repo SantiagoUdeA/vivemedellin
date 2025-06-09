@@ -6,21 +6,21 @@ import com.vivemedellin.valoracion_comentarios.review.application.commands.delet
 import com.vivemedellin.valoracion_comentarios.review.application.commands.delete_review.DeleteReviewHandler;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.commands.update_review.UpdateReviewHandler;
+import com.vivemedellin.valoracion_comentarios.review.application.queries.get_review_by_user_and_event.GetUserReviewHandler;
+import com.vivemedellin.valoracion_comentarios.review.application.queries.get_review_by_user_and_event.GetUserReviewCommand;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdQuery;
 import com.vivemedellin.valoracion_comentarios.review.application.queries.get_reviews.GetReviewsByEventIdHandler;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
-import com.vivemedellin.valoracion_comentarios.shared.exceptions.UnauthorizedAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.UUID;
+
+import static com.vivemedellin.valoracion_comentarios.shared.util.AuthUtils.getUserId;
 
 
 @Controller
@@ -30,13 +30,15 @@ public class ReviewController {
     private final GetReviewsByEventIdHandler getReviewsByEventIdHandler;
     private final DeleteReviewHandler deleteReviewHandler;
     private final UpdateReviewHandler updateReviewHandler;
+    private final GetUserReviewHandler getUserReviewHandler;
 
     @Autowired
-    public ReviewController(CreateReviewHandler createReviewHandler, GetReviewsByEventIdHandler getReviewsByEventIdHandler, DeleteReviewHandler deleteReviewHandler, UpdateReviewHandler updateReviewHandler) {
+    public ReviewController(CreateReviewHandler createReviewHandler, GetReviewsByEventIdHandler getReviewsByEventIdHandler, DeleteReviewHandler deleteReviewHandler, UpdateReviewHandler updateReviewHandler, GetUserReviewHandler getUserReviewHandler) {
         this.createReviewHandler = createReviewHandler;
         this.getReviewsByEventIdHandler = getReviewsByEventIdHandler;
         this.deleteReviewHandler = deleteReviewHandler;
         this.updateReviewHandler = updateReviewHandler;
+        this.getUserReviewHandler = getUserReviewHandler;
     }
 
     @MutationMapping
@@ -77,16 +79,18 @@ public class ReviewController {
 
     @QueryMapping
     public List<ReviewDto> allReviewsByEventId(@Argument int eventId){
-        var query= new GetReviewsByEventIdQuery((long) eventId);
+        var query = new GetReviewsByEventIdQuery((long) eventId);
         return getReviewsByEventIdHandler.handle(query);
     }
 
-    private UUID getUserId() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth == null || !auth.isAuthenticated()) {
-            throw new UnauthorizedAccessException();
-        }
-        return UUID.fromString((String) auth.getPrincipal());
+    @QueryMapping
+    @PreAuthorize("hasRole('user')")
+    public ReviewDto reviewByEventId(@Argument("eventId") Integer eventId){
+        var userId = getUserId();
+        var command = new GetUserReviewCommand((long) eventId, userId);
+        return getUserReviewHandler.handle(command);
     }
+
+
 
 }

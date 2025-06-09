@@ -2,7 +2,7 @@ package com.vivemedellin.valoracion_comentarios.populate.service;
 
 import com.vivemedellin.valoracion_comentarios.category.dto.CategoryDTO;
 import com.vivemedellin.valoracion_comentarios.category.service.CategoryService;
-import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
+import com.vivemedellin.valoracion_comentarios.event.dto.EventDto;
 import com.vivemedellin.valoracion_comentarios.event.service.EventService;
 import com.vivemedellin.valoracion_comentarios.organizer.dto.OrganizerDTO;
 import com.vivemedellin.valoracion_comentarios.organizer.service.OrganizerService;
@@ -33,7 +33,7 @@ public class PopulateDatabaseService {
         return this.categoryService.populateDatabase();
     }
 
-    public EventDTO populateEvents(){
+    public EventDto populateEvents(){
         return this.eventService.populateDatabase();
     }
 

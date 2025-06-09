@@ -4,7 +4,7 @@ import com.vivemedellin.valoracion_comentarios.admin.entity.Admin;
 import com.vivemedellin.valoracion_comentarios.admin.repository.AdminRepository;
 import com.vivemedellin.valoracion_comentarios.category.entity.Category;
 import com.vivemedellin.valoracion_comentarios.category.service.CategoryRepository;
-import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
+import com.vivemedellin.valoracion_comentarios.event.dto.EventDto;
 import com.vivemedellin.valoracion_comentarios.event.dto.EventWithReviewStatsDTO;
 import com.vivemedellin.valoracion_comentarios.event.factory.EventMockFactory;
 import com.vivemedellin.valoracion_comentarios.event.mapper.EventMapper;
@@ -42,7 +42,11 @@ EventService {
         return eventRepository.findAllWithReviewStats();
     }
 
-    public EventDTO populateDatabase(){
+    public EventWithReviewStatsDTO getById(Long id){
+        return eventRepository.findWithReviewStats(id);
+    }
+
+    public EventDto populateDatabase(){
         final Faker faker = new Faker();
         var categories = categoryRepository.findAll();
         var organizers = organizerRepository.findAll();

@@ -8,8 +8,9 @@ enum ReportReason {
 
 type Report {
     id: ID!
-    reviewId: Int!
+    review: Review!
     reason: ReportReason!
+    createdAt: String!
 }
 
 input CreateReportInput {

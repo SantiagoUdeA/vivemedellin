@@ -3,6 +3,7 @@ package com.vivemedellin.valoracion_comentarios.event.entity;
 import com.vivemedellin.valoracion_comentarios.admin.entity.Admin;
 import com.vivemedellin.valoracion_comentarios.category.entity.Category;
 import com.vivemedellin.valoracion_comentarios.organizer.entity.Organizer;
+import com.vivemedellin.valoracion_comentarios.review.entity.Review;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,6 +33,9 @@ public class Event {
     @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "admin_id")
     private Admin admin;
+
+    @OneToMany(mappedBy = "event", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Review> reviews = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.SET_NULL)

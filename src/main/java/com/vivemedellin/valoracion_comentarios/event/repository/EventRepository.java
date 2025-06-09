@@ -24,4 +24,21 @@ public interface EventRepository extends JpaRepository<Event, Long>{
     GROUP BY e.id, e.title, e.description, e.date, e.location, e.price
     """)
     List<EventWithReviewStatsDTO> findAllWithReviewStats();
+
+    @Query("""
+    SELECT
+        e.id AS id,
+        e.title AS title,
+        e.description AS description,
+        e.date AS date,
+        e.location AS location,
+        e.price AS price,
+        COUNT(r.id) AS totalReviews,
+        COALESCE(AVG(r.rating), 0.0) AS averageRating
+    FROM Event e
+    LEFT JOIN Review r ON r.event.id = e.id
+    WHERE e.id = :eventId
+    GROUP BY e.id, e.title, e.description, e.date, e.location, e.price
+    """)
+    EventWithReviewStatsDTO findWithReviewStats(Long eventId);
 }

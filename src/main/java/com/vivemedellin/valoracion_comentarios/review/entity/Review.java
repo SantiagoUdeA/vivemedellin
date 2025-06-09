@@ -28,11 +28,6 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "event_id")
-    private Event event;
-
     @NotNull
     @Column(name = "rating", nullable = false)
     private Integer rating;
@@ -48,5 +43,9 @@ public class Review {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Instant updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
 
 }

@@ -1,17 +1,10 @@
 package com.vivemedellin.valoracion_comentarios.review.application.commands.create_review;
 
-import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
-import com.vivemedellin.valoracion_comentarios.event.entity.Event;
-import com.vivemedellin.valoracion_comentarios.event.mapper.EventMapper;
 import com.vivemedellin.valoracion_comentarios.review.dto.ReviewDto;
-import com.vivemedellin.valoracion_comentarios.review.entity.Review;
 import com.vivemedellin.valoracion_comentarios.review.exceptions.UserAlreadyReviewedException;
 import com.vivemedellin.valoracion_comentarios.review.factory.ReviewFactory;
 import com.vivemedellin.valoracion_comentarios.review.mapper.ReviewMapper;
 import com.vivemedellin.valoracion_comentarios.review.repository.ReviewRepository;
-import com.vivemedellin.valoracion_comentarios.user.dto.UserDto;
-import com.vivemedellin.valoracion_comentarios.user.entity.User;
-import com.vivemedellin.valoracion_comentarios.user.mapper.UserMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

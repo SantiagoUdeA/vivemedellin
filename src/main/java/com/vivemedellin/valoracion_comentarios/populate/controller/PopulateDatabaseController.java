@@ -1,7 +1,7 @@
 package com.vivemedellin.valoracion_comentarios.populate.controller;
 
 import com.vivemedellin.valoracion_comentarios.category.dto.CategoryDTO;
-import com.vivemedellin.valoracion_comentarios.event.dto.EventDTO;
+import com.vivemedellin.valoracion_comentarios.event.dto.EventDto;
 import com.vivemedellin.valoracion_comentarios.organizer.dto.OrganizerDTO;
 import com.vivemedellin.valoracion_comentarios.populate.service.PopulateDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class PopulateDatabaseController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<EventDTO> populateEvents(){
+    public ResponseEntity<EventDto> populateEvents(){
         var event = populateDatabaseService.populateEvents();
         return ResponseEntity.ok(event);
     }

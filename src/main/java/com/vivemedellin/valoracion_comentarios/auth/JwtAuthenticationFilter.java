@@ -40,9 +40,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .getBody();
 
                 String userId = claims.getSubject();
-                Map<String, Object> appMetadata = claims.get("app_metadata", Map.class);
+                Map<String, Object> userMetaData = claims.get("raw_user_meta_data", Map.class);
 
-                String role = (appMetadata != null) ? (String) appMetadata.getOrDefault("role", "user") : "user";
+                String role = (userMetaData != null) ? (String) userMetaData.getOrDefault("role", "user") : "user";
 
                 List<SimpleGrantedAuthority> authorities = new ArrayList<>();
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + role));

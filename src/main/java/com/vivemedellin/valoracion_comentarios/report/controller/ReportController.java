@@ -35,8 +35,6 @@ public class ReportController {
     @PreAuthorize("hasRole('user')")
     @MutationMapping
     public ReportDto createReport(@Argument("input") CreateReportDto input){
-        var test = this.reportService.createReport(input);
-        System.out.println(test);
-        return  test;
+        return this.reportService.createReport(input);
     }
 }

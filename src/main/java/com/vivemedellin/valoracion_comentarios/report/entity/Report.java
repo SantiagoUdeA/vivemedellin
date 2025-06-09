@@ -3,10 +3,14 @@ package com.vivemedellin.valoracion_comentarios.report.entity;
 import com.vivemedellin.valoracion_comentarios.review.entity.Review;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.type.SqlTypes;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -30,4 +34,9 @@ public class Report {
     @Column(name = "reason", nullable = false, columnDefinition = "report_reason")
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     private ReportReason reason;
+
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
 }

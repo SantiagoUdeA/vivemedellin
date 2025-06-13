@@ -2,7 +2,6 @@ package com.vivemedellin.valoracion_comentarios.report.controller;
 
 import com.vivemedellin.valoracion_comentarios.report.dto.CreateReportDto;
 import com.vivemedellin.valoracion_comentarios.report.dto.ReportDto;
-import com.vivemedellin.valoracion_comentarios.report.entity.ReportReason;
 import com.vivemedellin.valoracion_comentarios.report.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -36,5 +35,12 @@ public class ReportController {
     @MutationMapping
     public ReportDto createReport(@Argument("input") CreateReportDto input){
         return this.reportService.createReport(input);
+    }
+
+    @PreAuthorize("hasRole('admin')")
+    @MutationMapping
+    public ReportDto deleteReport(@Argument Long reportId){
+        var id = getUserId();
+        return this.reportService.deleteReport(reportId, id);
     }
 }

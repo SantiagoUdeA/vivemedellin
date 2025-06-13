@@ -9,6 +9,9 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 
+import static com.vivemedellin.valoracion_comentarios.shared.util.AuthUtils.getUserId;
+
+
 @Controller
 public class ModerationController {
 
@@ -22,13 +25,15 @@ public class ModerationController {
     @PreAuthorize("hasRole('admin')")
     @MutationMapping
     public ReviewDto updateReviewModeration(@Argument("input") UpdateReviewModerationDto updateReviewModerationDto){
-        return moderationService.updateReview(updateReviewModerationDto);
+        var userId = getUserId();
+        return moderationService.updateReview(updateReviewModerationDto, userId);
     }
 
     @PreAuthorize("hasRole('admin')")
     @MutationMapping
     public ReviewDto deleteReviewModeration(@Argument("reviewId") Long reviewId){
-        return moderationService.deleteReview(reviewId);
+        var userId = getUserId();
+        return moderationService.deleteReview(reviewId, userId);
     }
 
 }

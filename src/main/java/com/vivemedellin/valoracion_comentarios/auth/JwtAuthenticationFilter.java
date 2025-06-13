@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .getBody();
 
                 String userId = claims.getSubject();
-                Map<String, Object> userMetaData = claims.get("raw_user_meta_data", Map.class);
+                Map<String, Object> userMetaData = claims.get("user_metadata", Map.class);
 
                 String role = (userMetaData != null) ? (String) userMetaData.getOrDefault("role", "user") : "user";
 

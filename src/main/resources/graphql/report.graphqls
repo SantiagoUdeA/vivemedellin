@@ -20,6 +20,7 @@ input CreateReportInput {
 
 extend type Mutation {
     createReport(input: CreateReportInput!): Report!
+    deleteReport(reportId: ID!): Report!
 }
 
 extend type Query {

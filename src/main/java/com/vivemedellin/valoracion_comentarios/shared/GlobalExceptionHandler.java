@@ -46,7 +46,6 @@ public class GlobalExceptionHandler extends DataFetcherExceptionResolverAdapter 
 
         return GraphqlErrorBuilder.newError(env)
                 .message(message)
-                .errorType(graphql.ErrorType.DataFetchingException)
                 .build();
     }
 }

@@ -1,17 +1,71 @@
+"""
+Representa un evento disponible en la plataforma,
+como conciertos, conferencias, talleres, etc.
+"""
 type Event {
+    """
+    Identificador único del evento.
+    """
     id: Int!
+
+    """
+    Título del evento, mostrado como encabezado principal.
+    """
     title: String!
+
+    """
+    Descripción opcional con más detalles sobre el evento.
+    Puede incluir contenido promocional, agenda o requisitos.
+    """
     description: String
+
+    """
+    Fecha del evento en formato ISO 8601 (ej. "2025-06-13T18:00:00Z").
+    """
     date: String!
+
+    """
+    Ubicación del evento (dirección o nombre del lugar).
+    """
     location: String!
+
+    """
+    Precio de asistencia al evento (en una moneda definida por el sistema).
+    """
     price: Float!
+
+    """
+    Organizador responsable del evento.
+    Puede incluir datos como nombre, contacto, etc.
+    """
     organizer: Organizer
+
+    """
+    Categoría a la que pertenece el evento, útil para filtrado y organización.
+    """
     category: Category
+
+    """
+    Número total de reseñas recibidas para este evento.
+    """
     totalReviews: Int!
+
+    """
+    Calificación promedio del evento, en una escala numérica (ej. de 1.0 a 5.0).
+    """
     averageRating: Float!
 }
 
 extend type Query {
+    """
+    Devuelve todos los eventos disponibles en la plataforma.
+    Puede aplicarse paginación o filtros en una versión más avanzada.
+    """
     allEvents: [Event]!
+
+    """
+    Busca un evento específico por su ID.
+    Lanza un error si el evento no existe.
+    """
     event(eventId: Int!): Event!
 }

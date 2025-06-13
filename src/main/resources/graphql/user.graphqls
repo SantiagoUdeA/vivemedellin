@@ -1,5 +1,20 @@
-type User{
+"""
+Representa a un usuario registrado en la plataforma.
+"""
+type User {
+    """
+    Identificador único del usuario.
+    Generalmente es un UUID generado por el sistema.
+    """
     id: String!
+
+    """
+    Nombre visible del usuario en la interfaz, como se muestra en reseñas o perfiles públicos.
+    """
     displayName: String!
+
+    """
+    Correo electrónico del usuario. Se utiliza para autenticación, notificaciones y contacto.
+    """
     email: String!
 }

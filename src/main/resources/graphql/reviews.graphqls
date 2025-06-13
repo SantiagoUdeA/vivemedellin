@@ -1,19 +1,59 @@
+"""
+Representa una reseña realizada por un usuario sobre un evento.
+Incluye una calificación, comentario y metadatos de creación/modificación.
+"""
 type Review {
+    """
+    Identificador único de la reseña.
+    """
     id: Int!
+
+    """
+    Usuario que realizó la reseña.
+    """
     user: User!
+
+    """
+    Calificación otorgada al evento, normalmente en una escala de 1 a 5.
+    """
     rating: Int!
+
+    """
+    Comentario opcional del usuario sobre su experiencia.
+    """
     comment: String
+
+    """
+    Fecha y hora en que se creó la reseña (formato ISO 8601).
+    """
     createdAt: String!
+
+    """
+    Fecha y hora de la última actualización, si ha sido modificada.
+    """
     updatedAt: String
 }
 
 type Mutation {
+    """
+    Crea una nueva reseña asociada a un evento específico.
+    El usuario debe estar autenticado.
+    """
     createReview(
         eventId: String!
         rating: Int!
         comment: String
     ): Review!
+
+    """
+    Elimina una reseña existente por su ID.
+    Generalmente solo el autor o un moderador puede hacerlo.
+    """
     deleteReview(reviewId: Int!): Review!
+
+    """
+    Actualiza una reseña existente. Se puede modificar la calificación, el comentario o ambos.
+    """
     updateReview(
         reviewId: Int!
         rating: Int
@@ -21,8 +61,16 @@ type Mutation {
     ): Review!
 }
 
-
 type Query {
+    """
+    Devuelve todas las reseñas asociadas a un evento específico.
+    Ideal para mostrar múltiples opiniones en un listado.
+    """
     allReviewsByEventId(eventId: Int!): [Review!]!
+
+    """
+    Devuelve la reseña única de un usuario para un evento específico.
+    Útil si se restringe a una reseña por usuario por evento.
+    """
     reviewByEventId(eventId: Int!): Review
 }

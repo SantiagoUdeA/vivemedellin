@@ -1,6 +1,27 @@
-type Organizer{
+"""
+Representa a la persona u organización responsable de la creación y gestión de eventos.
+Puede ser un individuo o una entidad.
+"""
+type Organizer {
+    """
+    Identificador único del organizador.
+    Puede ser un UUID u otro tipo de string único.
+    """
     id: String!
+
+    """
+    Correo electrónico del organizador.
+    Utilizado para notificaciones o contacto administrativo.
+    """
     email: String!
+
+    """
+    Nombre del organizador (persona de contacto).
+    """
     firstName: String!
+
+    """
+    Apellido del organizador.
+    """
     lastName: String!
 }

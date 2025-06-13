@@ -1,28 +1,91 @@
+"""
+Razones por las que un usuario puede reportar una reseña.
+Estas razones ayudan al equipo de moderación a clasificar y gestionar los reportes.
+"""
 enum ReportReason {
+    """
+    Contenido no deseado o irrelevante (spam).
+    """
     SPAM
+
+    """
+    Contenido ofensivo o que promueve el odio.
+    """
     OFFENSIVE
+
+    """
+    Contenido inapropiado para la plataforma (lenguaje, imágenes, etc.).
+    """
     INAPPROPRIATE
+
+    """
+    Divulgación de información personal no autorizada.
+    """
     PERSONAL_INFORMATION
+
+    """
+    Promoción comercial no solicitada.
+    """
     ADVERTISING
 }
 
+"""
+Representa un reporte realizado por un usuario sobre una reseña.
+Incluye el motivo y la fecha en que fue creado.
+"""
 type Report {
+    """
+    Identificador único del reporte.
+    """
     id: ID!
+
+    """
+    Reseña que fue reportada.
+    """
     review: Review!
+
+    """
+    Motivo del reporte seleccionado por el usuario.
+    """
     reason: ReportReason!
+
+    """
+    Fecha y hora en que se creó el reporte (formato ISO 8601).
+    """
     createdAt: String!
 }
 
+"""
+Entrada necesaria para crear un nuevo reporte sobre una reseña.
+"""
 input CreateReportInput {
+    """
+    Identificador de la reseña que se desea reportar.
+    """
     reviewId: Int!
+
+    """
+    Motivo del reporte seleccionado de la lista disponible.
+    """
     reason: ReportReason!
 }
 
 extend type Mutation {
+    """
+    Crea un nuevo reporte sobre una reseña. Retorna el reporte creado.
+    """
     createReport(input: CreateReportInput!): Report!
+
+    """
+    Elimina un reporte existente por su ID. Usado generalmente por moderadores.
+    """
     deleteReport(reportId: ID!): Report!
 }
 
 extend type Query {
+    """
+    Devuelve todos los reportes registrados en el sistema.
+    Puede incluir filtros en una versión extendida.
+    """
     allReports: [Report!]!
 }

@@ -1,9 +1,30 @@
-input UpdateReviewModerationInput{
+"""
+Entrada para actualizar el estado de moderación de una reseña.
+Normalmente usada por moderadores o administradores.
+"""
+input UpdateReviewModerationInput {
+    """
+    Identificador único de la reseña que se desea moderar.
+    """
     reviewId: Int!
+
+    """
+    Comentario asociado a la moderación.
+    Puede indicar el motivo de la edición, rechazo, observación, etc.
+    """
     comment: String!
 }
 
 extend type Mutation {
+    """
+    Actualiza la moderación de una reseña, por ejemplo agregando un comentario
+    o marcándola como revisada. Retorna la reseña actualizada.
+    """
     updateReviewModeration(input: UpdateReviewModerationInput): Review!
+
+    """
+    Elimina la moderación de una reseña, usualmente usada para revertir
+    decisiones previas o por errores administrativos. Retorna la reseña modificada.
+    """
     deleteReviewModeration(reviewId: Int!): Review!
 }

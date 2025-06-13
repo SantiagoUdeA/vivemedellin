@@ -1,9 +1,29 @@
-type Category{
+"""
+Representa una categoría o sección dentro de la aplicación.
+Permite agrupar productos, artículos u otros recursos.
+"""
+type Category {
+    """
+    Identificador único de la categoría.
+    """
     id: Int!
+
+    """
+    Nombre legible de la categoría (ej. “Hoteles boutique”).
+    """
     name: String!
+
+    """
+    Descripción breve que detalla el propósito o alcance de la categoría.
+    Normalmente se muestra en la UI y en los listados.
+    """
     description: String!
 }
 
 extend type Query {
+    """
+    Devuelve la lista completa de categorías registradas.
+    Se espera un arreglo vacío si aún no existe ninguna.
+    """
     allCategories: [Category]!
 }
